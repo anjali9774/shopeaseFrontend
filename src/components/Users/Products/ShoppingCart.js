@@ -103,7 +103,7 @@ export default function ShoppingCart() {
                           </p>
                         </div>
                         <p className="mt-1 text-sm font-medium text-gray-900">
-                          ${product?.price} x {product?.qty} = $
+                          Rs{product?.price} x {product?.qty} = Rs
                           {product?.totalPrice}
                         </p>
                       </div>
@@ -163,7 +163,7 @@ export default function ShoppingCart() {
               <div className="flex items-center justify-between">
                 <dt className="text-sm text-gray-600">Subtotal</dt>
                 <dd className="text-sm font-medium text-gray-900">
-                  $ {sumTotalPrice}.00
+                  Rs {sumTotalPrice}.00
                 </dd>
               </div>
               <div className="flex items-center justify-between border-t border-gray-200 pt-4"></div>
@@ -175,7 +175,7 @@ export default function ShoppingCart() {
               {error && <ErrorMsg message={error?.message} />}
               {isAdded && (
                 <SuccessMsg
-                  message={`Congratulation you got ${coupon?.coupon?.discount} %`}
+                  message={`Congratulation you got Rs{coupon?.coupon?.discount} %`}
                 />
               )}
               {/* success */}
@@ -204,7 +204,7 @@ export default function ShoppingCart() {
                   Order total
                 </dt>
                 <dd className=" text-xl font-medium text-gray-900">
-                  $ {sumTotalPrice}
+                  Rs {sumTotalPrice}
                 </dd>
               </div>
             </dl>

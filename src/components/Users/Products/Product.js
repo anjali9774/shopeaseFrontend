@@ -16,7 +16,7 @@ import {
 } from "../../../redux/slices/cart/cartSlices";
 const product = {
   name: "Basic Tee",
-  price: "$35",
+  price: "Rs 35",
   href: "#",
   breadcrumbs: [
     { id: 1, name: "Women", href: "#" },
@@ -177,7 +177,7 @@ export default function Product() {
                 {product?.name}
               </h1>
               <p className="text-xl font-medium text-gray-900">
-                $ {product?.price}.00
+                Rs {product?.price}.00
               </p>
             </div>
             {/* Reviews */}

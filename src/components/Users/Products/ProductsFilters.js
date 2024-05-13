@@ -34,29 +34,21 @@ const sortOptions = [
 
 const allPrice = [
   {
-    amount: "0 - 50",
+    amount: "0 - 500",
   },
   {
-    amount: "50 - 100",
+    amount: "500 - 1000",
   },
   {
-    amount: "100 - 150",
+    amount: "1000 - 15000",
   },
   {
-    amount: "150 - 200",
+    amount: "15000 - 20000",
   },
   {
-    amount: "200 - 250",
+    amount: "20000 - above",
   },
-  {
-    amount: "250 - 300",
-  },
-  {
-    amount: "300 - 350",
-  },
-  {
-    amount: "350 - 400",
-  },
+  
 ];
 
 function classNames(...classes) {
@@ -342,7 +334,7 @@ export default function ProductsFilters() {
                                     className="h-4 w-4 rounded border-gray-300 cursor-pointer text-indigo-600 focus:ring-indigo-500"
                                   />
                                   <label className="ml-3 min-w-0 flex-1 text-gray-500">
-                                    $ {price?.amount}
+                                    Rs {price?.amount}
                                   </label>
                                 </div>
                               ))}
@@ -637,7 +629,7 @@ export default function ProductsFilters() {
                                 className="h-4 w-4 rounded border-gray-300 cursor-pointer text-indigo-600 focus:ring-indigo-500"
                               />
                               <label className="ml-3 min-w-0 flex-1 text-gray-500">
-                                $ {price?.amount}
+                                Rs {price?.amount}
                               </label>
                             </div>
                           ))}
