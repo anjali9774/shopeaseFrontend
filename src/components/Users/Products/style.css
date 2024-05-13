@@ -1,0 +1,6 @@
+
+
+&:focus {
+  border-color: #f00;
+  outline: none;
+}
