@@ -2,10 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Products = ({ products }) => {
-  if (!Array.isArray(products)) {
-    return <p>No products available</p>;
-  }
-
   return (
     <>
       <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:col-span-3 lg:gap-x-8">
@@ -34,12 +30,12 @@ const Products = ({ products }) => {
                 <div className="px-6 pb-6 mt-8">
                   <a className="block px-6 mb-2" href="#">
                     <h3 className="mb-2 text-xl font-bold font-heading">
-                      {product?.name} 
+                      {product?.name}
                     </h3>
                     <p className="text-lg font-bold font-heading text-blue-500">
-                      <span>Rs {product?.price} </span>
+                      <span>${product?.price}</span>
                       <span className="text-xs text-gray-500 font-semibold font-heading line-through">
-                      Rs 40.99
+                        $40.99
                       </span>
                     </p>
                   </a>

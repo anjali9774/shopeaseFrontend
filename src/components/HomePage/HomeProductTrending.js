@@ -35,7 +35,7 @@ const HomeProductTrending = () => {
               Trending Products
             </h2>
             <a
-              href="/all-products"
+              href="#"
               className="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 md:block">
               Shop the collection
               <span aria-hidden="true"> &rarr;</span>
@@ -60,7 +60,7 @@ const HomeProductTrending = () => {
                   {product.name}
                 </h3>
                 <p className="mt-1 text-sm font-medium text-gray-900">
-                  Rs {product.price}.00
+                  ${product.price}.00
                 </p>
                 <p className="mt-1 text-sm text-gray-500">
                   {product.description}
@@ -71,7 +71,7 @@ const HomeProductTrending = () => {
 
           <div className="mt-8 text-sm md:hidden">
             <a
-              href="/all-products"
+              href="#"
               className="font-medium text-indigo-600 hover:text-indigo-500">
               Shop the collection
               <span aria-hidden="true"> &rarr;</span>

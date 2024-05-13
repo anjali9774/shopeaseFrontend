@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchOrdersAction } from "../../../redux/slices/orders/orderSlices";
+import { fetchOrdersAction } from "../../../redux/slices/orders/ordersSlices";
 import ErrorMsg from "../../ErrorMsg/ErrorMsg";
 import LoadingComponent from "../../LoadingComp/LoadingComponent";
 import NoDataFound from "../../NoDataFound/NoDataFound";
@@ -74,9 +74,9 @@ export default function Customers() {
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
               {uniqueCustomers?.map((customer) => (
-                <tr key={customer.user.fullName}>
+                <tr key={customer.user.fullname}>
                   <td className="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-6">
-                    {customer.user.fullName}
+                    {customer.user.fullname}
                   </td>
                   <td className="hidden px-3 py-4 text-sm text-gray-500 lg:table-cell">
                     {customer.user.email}

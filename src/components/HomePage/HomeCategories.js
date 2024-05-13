@@ -38,7 +38,7 @@ const HomeCategories = () => {
                     className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-gray-800 opacity-50"
                   />
                   <span className="relative mt-auto text-center text-xl font-bold text-white">
-                    {category.name} 
+                    {category.name} ({category.products.length})
                   </span>
                 </Link>
               ))}

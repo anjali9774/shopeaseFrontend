@@ -17,7 +17,7 @@ const AddShippingAddress = () => {
   }, [dispatch]);
   const { loading, error, profile } = useSelector((state) => state?.users);
   const user = profile?.user;
-  
+  console.log(user?.hasShippingAddress);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -35,7 +35,7 @@ const AddShippingAddress = () => {
 
   //onsubmit
   const onSubmit = (e) => {
-    
+    console.log(formData);
     e.preventDefault();
     dispatch(updateUserShippingAddressAction(formData));
   };

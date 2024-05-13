@@ -1,1 +1,1 @@
-# shopeaseFrontend
+# mern-ecommerce-course

@@ -4,7 +4,7 @@ import brandsReducer from "../slices/categories/brandsSlice";
 import categoryReducer from "../slices/categories/categoriesSlice";
 import colorsReducer from "../slices/categories/colorsSlice";
 import couponsReducer from "../slices/coupons/couponsSlice";
-import ordersReducer from "../slices/orders/orderSlices";
+import ordersReducer from "../slices/orders/ordersSlices";
 import productReducer from "../slices/products/productSlices";
 import reviewsReducer from "../slices/reviews/reviewsSlice";
 import usersReducer from "../slices/users/usersSlice";

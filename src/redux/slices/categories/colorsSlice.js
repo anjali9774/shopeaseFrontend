@@ -31,7 +31,7 @@ export const createColorAction = createAsyncThunk(
       };
       //Images
       const { data } = await axios.post(
-        `${baseURL}/colors/add`,
+        `${baseURL}/colors`,
         {
           name,
         },

@@ -8,37 +8,26 @@ import SuccessMsg from "../../SuccessMsg/SuccessMsg";
 
 export default function AddBrand() {
   const dispatch = useDispatch();
-  
-  // Form data
+  //form data
   const [formData, setFormData] = useState({
     name: "",
   });
-  
-  // State for tracking if brand is added successfully
-  const [isAdded, setIsAdded] = useState(false);
-
-  // Handle form input change
+  //onChange
   const handleOnChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
-  const handleOnSubmit = async (e) => {
+  //onSubmit
+  const handleOnSubmit = (e) => {
     e.preventDefault();
-    await dispatch(createBrandAction(formData?.name));
-    
-    // Reset form and set isAdded to true
-    setFormData({ name: "" });
-    setIsAdded(true);
-    
-    // Reset isAdded after 3 seconds
-    setTimeout(() => {
-      setIsAdded(false);
-    }, 3000);
+    dispatch(createBrandAction(formData?.name));
+    //reset form
+    setFormData({
+      name: "",
+    });
   };
-
-  // Get data from store
-  const { error, loading } = useSelector((state) => state?.brands);
+  //get data from store
+  const { error, loading, isAdded } = useSelector((state) => state?.brands);
 
   return (
     <>
@@ -51,11 +40,11 @@ export default function AddBrand() {
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            strokeWidth="1.5"
+            stroke-width="1.5"
             stroke="currentColor">
             <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              stroke-linecap="round"
+              stroke-linejoin="round"
               d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
             />
           </svg>

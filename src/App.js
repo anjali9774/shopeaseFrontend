@@ -20,7 +20,6 @@ import AddColor from "./components/Admin/Categories/AddColor";
 import AllCategories from "./components/HomePage/AllCategories";
 import UpdateCoupon from "./components/Admin/Coupons/UpdateCoupon";
 import Product from "./components/Users/Products/Product";
-//import Products from "./components/Users/Products/Products";
 import ShoppingCart from "./components/Users/Products/ShoppingCart";
 import ProductsFilters from "./components/Users/Products/ProductsFilters";
 import CustomerProfile from "./components/Users/Profile/CustomerProfile";
@@ -31,31 +30,23 @@ import ManageOrders from "./components/Admin/Orders/ManageOrders";
 import Customers from "./components/Admin/Orders/Customers";
 import BrandsList from "./components/Admin/Categories/BrandsList";
 import AuthRoute from "./components/AuthRoute/AuthRoute";
-import AdminRoutes from "./components/AuthRoute/AdminRoute";
+import AdminRoutes from "./components/AuthRoute/AdminRoutes";
 import ThanksForOrdering from "./components/Users/Products/ThanksForOrdering";
 import ProductUpdate from "./components/Admin/Products/ProuductUpdate";
 import UpdateOrders from "./components/Admin/Orders/UpdateOrders";
 import ColorsList from "./components/Admin/Categories/ColorsList";
 import { useDispatch, useSelector } from "react-redux";
-import AllProducts from "./components/HomePage/AllProducts";
 
 const App = () => {
-  const user = useSelector((state) =>
-    JSON.parse(localStorage.getItem("userInfo"))
-  );
-
   return (
     <BrowserRouter>
-      {/* {/* Conditionally render Navbar based on user authentication and isAdmin status */}
-      {/* {user && !user.user.isAdmin && <Navbar />}   */}
-
       <Navbar />
 
       {/* hide navbar if admin */}
       <Routes>
         {/* admin route */}
         <Route
-          path="/admin"
+          path="admin"
           element={
             <AdminRoutes>
               <AdminDashboard />
@@ -181,7 +172,6 @@ const App = () => {
         {/* public links */}
         {/* Products */}
         <Route path="/" element={<HomePage />} />
-        <Route path="/all-products" element={<AllProducts />}></Route>
         <Route path="/products-filters" element={<ProductsFilters />} />
         <Route path="/products/:id" element={<Product />} />
         <Route path="/all-categories" element={<AllCategories />} />

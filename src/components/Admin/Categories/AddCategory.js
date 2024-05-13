@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ErrorComponent from "../../ErrorMsg/ErrorMsg";
@@ -7,56 +7,48 @@ import LoadingComponent from "../../LoadingComp/LoadingComponent";
 import { createCategoryAction } from "../../../redux/slices/categories/categoriesSlice";
 
 export default function CategoryToAdd() {
-   // Dispatch
-   const dispatch = useDispatch();
+  //dispatch
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    name: "",
+  });
+  //---onChange---
+  const handleOnChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-   // Form state
-   const [formData, setFormData] = useState({
-     name: "",
-   });
- 
-   // File state
-   const [file, setFile] = useState(null);
-   const [fileErr, setFileErr] = useState(null);
- 
-   // Redux state
-   const { loading, error } = useSelector((state) => state?.categories);
- 
-   // Initialize isAdded to false
-   const [isAdded, setIsAdded] = useState(false);
- 
-   // Handle form input change
-   const handleOnChange = (e) => {
-     setFormData({ ...formData, [e.target.name]: e.target.value });
-   };
- 
-   // Handle file input change
-   const fileHandleChange = (event) => {
-     const newFile = event.target.files[0];
-     // Validation
-     if (newFile?.size > 1000000) {
-       setFileErr(`${newFile?.name} is too large`);
-     }
-     if (!newFile?.type?.startsWith("image/")) {
-       setFileErr(`${newFile?.name} is not an image`);
-     }
-     setFile(newFile);
-   };
- 
-   // Handle form submission
-   const handleOnSubmit = (e) => {
-     e.preventDefault();
-     // Dispatch create category action
-     dispatch(
-       createCategoryAction({
-         name: formData?.name,
-         file,
-       })
-     ).then(() => {
-       // Set isAdded to true after category is successfully added
-       setIsAdded(true);
-     });
-   };
+  //files
+  const [file, setFile] = useState(null);
+  const [fileErr, setFileErr] = useState(null);
+  //file handlechange
+  const fileHandleChange = (event) => {
+    const newFile = event.target.files[0];
+    //validation
+
+    if (newFile?.size > 1000000) {
+      setFileErr(`${newFile?.name} is too large`);
+    }
+    if (!newFile?.type?.startsWith("image/")) {
+      setFileErr(`${newFile?.name} is not an image`);
+    }
+
+    setFile(newFile);
+  };
+  //get data from store
+  const { loading, error, isAdded } = useSelector((state) => state?.categories);
+  //onSubmit
+  const handleOnSubmit = (e) => {
+    console.log(file);
+    e.preventDefault();
+    //dispatch
+    dispatch(
+      createCategoryAction({
+        name: formData?.name,
+        file,
+      })
+    );
+  };
+
   return (
     <>
       {error && <ErrorComponent message={error?.message} />}
@@ -69,11 +61,11 @@ export default function CategoryToAdd() {
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            strokeWidth="1.5"
+            stroke-width="1.5"
             stroke="currentColor">
             <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              stroke-linecap="round"
+              stroke-linejoin="round"
               d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
             />
           </svg>

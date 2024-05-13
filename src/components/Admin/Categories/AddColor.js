@@ -7,37 +7,27 @@ import LoadingComponent from "../../LoadingComp/LoadingComponent";
 import SuccessMsg from "../../SuccessMsg/SuccessMsg";
 export default function AddColor() {
   const dispatch = useDispatch();
-  
-  // Form data
+  //form data
   const [formData, setFormData] = useState({
     name: "",
   });
-  
-  // State for tracking if color is added successfully
-  const [isAdded, setIsAdded] = useState(false);
-
-  // Handle form input change
+  //onChange
   const handleOnChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
+  //onSubmit
   const handleOnSubmit = (e) => {
     e.preventDefault();
     dispatch(createColorAction(formData?.name));
-    
-    // Reset form and set isAdded to true
-    setFormData({ name: "" });
-    setIsAdded(true);
-    
-    // Reset isAdded after 3 seconds
-    setTimeout(() => {
-      setIsAdded(false);
-    }, 3000);
+    //reset form
+    setFormData({
+      name: "",
+    });
   };
+  //get data from store
+  const { error, loading, isAdded } = useSelector((state) => state?.colors);
 
-  // Get data from store
-  const { error, loading } = useSelector((state) => state?.colors);
   return (
     <>
       {isAdded && <SuccessMsg message="Color Created Successfully" />}

@@ -66,84 +66,84 @@ function classNames(...classes) {
 const sizeCategories = ["S", "M", "L", "XL", "XXL"];
 
 export default function ProductsFilters() {
-  ///dispatch
-const dispatch = useDispatch();
-const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-//get query string
-const [params, setParams] = useSearchParams();
-const category = params.get('category');
-//filters
-const [color, setColor] = useState("");
-const [price, setPrice] = useState("");
-const [brand, setBrand] = useState("");
-const [size, setSize] = useState("");
+  //dispatch
+  const dispatch = useDispatch();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  //get query string
+  const [params, setParams] = useSearchParams();
+  const category = params.get("category");
+  //filters
+  const [color, setColor] = useState("");
+  const [price, setPrice] = useState("");
+  const [brand, setBrand] = useState("");
+  const [size, setSize] = useState("");
+  console.log(color);
+  //build up url
+  let productUrl = `${baseURL}/products`;
+  if (category) {
+    productUrl = `${baseURL}/products?category=${category}`;
+  }
+  if (brand) {
+    productUrl = `${productUrl}&brand=${brand}`;
+  }
+  if (size) {
+    productUrl = `${productUrl}&size=${size}`;
+  }
+  if (price) {
+    productUrl = `${productUrl}&price=${price}`;
+  }
+  if (color) {
+    productUrl = `${productUrl}&color=${color?.name}`;
+  }
+  //fetch all products
+  useEffect(() => {
+    dispatch(
+      fetchProductsAction({
+        url: productUrl,
+      })
+    );
+  }, [dispatch, category, size, brand, price, color]);
+  //get store data
+  const {
+    products: { products },
+    loading,
+    error,
+  } = useSelector((state) => state?.products);
 
-//build up url
-let productUrl = `${baseURL}/products`;
+  //fetch brands
+  useEffect(() => {
+    dispatch(
+      fetchBrandsAction({
+        url: productUrl,
+      })
+    );
+  }, [dispatch]);
+  //get store data
+  const {
+    brands: { brands },
+  } = useSelector((state) => state?.brands);
 
-if (category) {
-  productUrl = `${baseURL}/products?category=${category}`;
-}
-if (brand) {
-  productUrl = `${productUrl}&brand=${brand}`;
-}
-if (size) {
-  productUrl = `${productUrl}&size=${size}`;
-}
-if (price) {
-  productUrl = `${productUrl}&price=${price}`;
-}
-if (color) {
-  productUrl = `${productUrl}&color=${color?.name}`;
-}
-//fetch all products
-useEffect(() => {
-  dispatch(
-    fetchProductsAction({
-      url: productUrl,
-    })
-  );
-}, [dispatch, category,size,brand,price,color]);
-//get store data
-const {
-  products: { products },
-  loading,
-  error,
-} = useSelector((state) => state?.products);
+  //fetch colors
+  useEffect(() => {
+    dispatch(
+      fetchColorsAction({
+        url: productUrl,
+      })
+    );
+  }, [dispatch]);
 
-//fetch brands
-useEffect(() => {
-  dispatch(
-    fetchBrandsAction({
-      url: productUrl,
-    })
-  );
-}, [dispatch, category]);
-//get store data
-const {
-  brands: { brands },
-} = useSelector((state) => state?.brands);
+  //get store data
+  const {
+    colors: { colors },
+  } = useSelector((state) => state?.colors);
 
-//fetch colors
-useEffect(() => {
-  dispatch(
-    fetchColorsAction({
-      url: productUrl,
-    })
-  );
-}, [dispatch, category]);
+  let colorsLoading;
+  let colorsError;
 
-//get store data
-const {
-  colors: { colors },
-} = useSelector((state) => state?.colors);
+  let productsLoading;
+  let productsError;
 
-let colorsLoading;
-let colorsError;
-
-let productsLoading;
-let productsError;
   return (
     <div className="bg-white">
       <div>

@@ -38,7 +38,7 @@ export const createCategoryAction = createAsyncThunk(
       };
       //Images
       const { data } = await axios.post(
-        `${baseURL}/categories/add`,
+        `${baseURL}/categories`,
         formData,
         config
       );

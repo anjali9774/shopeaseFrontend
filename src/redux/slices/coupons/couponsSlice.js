@@ -34,7 +34,7 @@ export const createCouponAction = createAsyncThunk(
       };
       //Images
       const { data } = await axios.post(
-        `${baseURL}/coupons/add`,
+        `${baseURL}/coupons`,
         {
           code,
           discount,

@@ -1,39 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 import { registerUserAction } from "../../../redux/slices/users/usersSlice";
 import ErrorMsg from "../../ErrorMsg/ErrorMsg";
 import LoadingComponent from "../../LoadingComp/LoadingComponent";
 
 const RegisterForm = () => {
+  //dispatch
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Initialize useNavigate
+  //dispatch
   const [formData, setFormData] = useState({
-    fullName: "",
+    fullname: "",
     email: "",
     password: "",
   });
-
-  const { fullName, email, password } = formData;
-
+  //---Destructuring---
+  const { fullname, email, password } = formData;
+  //---onchange handler----
   const onChangeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  //---onsubmit handler----
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(registerUserAction({ fullName, email, password })).then((response) => {
-      // Check if registration was successful
-      if (response.payload && response.payload.status === "success") {
-        // Redirect to dashboard upon successful registration
-        navigate("/");
-      }
-    });
+    dispatch(registerUserAction({ fullname, email, password }));
   };
-
-  const error = useSelector((state) => state.users.error);
-  const loading = useSelector((state) => state.users.loading);
-
+  //select store data
+  const { user, error, loading } = useSelector((state) => state?.users);
+  //redirect
+  useEffect(() => {
+    if (user) {
+      window.location.href = "/login";
+    }
+  }, [user]);
   return (
     <>
       <section className="relative overflow-x-hidden">
@@ -44,12 +43,13 @@ const RegisterForm = () => {
                 <h3 className="mb-8 text-4xl md:text-5xl font-bold font-heading">
                   Signing up with social is super quick
                 </h3>
-                {error && <ErrorMsg message={error.message} />}
+                {/* errr */}
+                {error && <ErrorMsg message={error?.message} />}
                 <p className="mb-10">Please, do not hesitate</p>
                 <form onSubmit={onSubmitHandler}>
                   <input
-                    name="fullName"
-                    value={fullName}
+                    name="fullname"
+                    value={fullname}
                     onChange={onChangeHandler}
                     className="w-full mb-4 px-12 py-6 border border-gray-200 focus:ring-blue-300 focus:border-blue-300 rounded-md"
                     type="text"

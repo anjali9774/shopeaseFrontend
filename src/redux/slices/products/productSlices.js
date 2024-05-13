@@ -1,11 +1,13 @@
 import axios from "axios";
-
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { act } from "react-dom/test-utils";
 import baseURL from "../../../utils/baseURL";
-import { resetErrAction, resetSuccessAction } from "../globalActions/globalActions";
-const instance = axios.create({
-  baseURL,
-});
+import {
+  resetErrAction,
+  resetSuccessAction,
+} from "../globalActions/globalActions";
+const { createAsyncThunk, createSlice } = require("@reduxjs/toolkit");
+
+//initalsState
 const initialState = {
   products: [],
   product: {},
@@ -15,6 +17,7 @@ const initialState = {
   isUpdated: false,
   isDelete: false,
 };
+
 //create product action
 export const createProductAction = createAsyncThunk(
   "product/create",
@@ -61,7 +64,7 @@ export const createProductAction = createAsyncThunk(
       });
 
       const { data } = await axios.post(
-        `${baseURL}/products/createproduct`,
+        `${baseURL}/products`,
         formData,
         config
       );
@@ -71,11 +74,45 @@ export const createProductAction = createAsyncThunk(
     }
   }
 );
+
+//create product action
 export const updateProductAction = createAsyncThunk(
   "product/update",
-  async (payload, { rejectWithValue, getState }) => {
+  async (payload, { rejectWithValue, getState, dispatch }) => {
+    console.log(payload);
     try {
-      const { data } = await axios.put(`${baseURL}/products/${payload.id}`, payload);
+      const {
+        name,
+        description,
+        category,
+        sizes,
+        brand,
+        colors,
+        price,
+        totalQty,
+        id,
+      } = payload;
+      const token = getState()?.users?.userAuth?.userInfo?.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await axios.put(
+        `${baseURL}/products/${id}`,
+        {
+          name,
+          description,
+          category,
+          sizes,
+          brand,
+          colors,
+          price,
+          totalQty,
+        },
+        config
+      );
       return data;
     } catch (error) {
       return rejectWithValue(error?.response?.data);
@@ -104,7 +141,6 @@ export const fetchProductsAction = createAsyncThunk(
   }
 );
 
-
 //fetch product action
 export const fetchProductAction = createAsyncThunk(
   "product/details",
@@ -127,115 +163,83 @@ export const fetchProductAction = createAsyncThunk(
     }
   }
 );
-export const deleteProductAction = createAsyncThunk(
-  "product/delete",
-  async (productId, { rejectWithValue, getState }) => {
-    try {
-      const token = getState()?.users?.userAuth?.userInfo?.token;
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const response = await axios.delete(
-        `${baseURL}/products/${productId}`,
-        config
-      );
-      console.log("Deleted product:", response.data); // Add console.log here
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error?.response?.data);
-    }
-  }
-);
-
-
-
+//slice
 const productSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
   extraReducers: (builder) => {
-    
-  builder
-    .addCase(createProductAction.pending, (state) => {
-       state.loading = true;
-     })
-     .addCase(createProductAction.fulfilled, (state, action) => {
+    //create
+    builder.addCase(createProductAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(createProductAction.fulfilled, (state, action) => {
       state.loading = false;
-      state.products.push(action.payload); // Assuming action.payload is the newly created product
+      state.product = action.payload;
       state.isAdded = true;
-    })
-    .addCase(createProductAction.rejected, (state, action) => {
-       state.loading = false;
-       state.error = action.payload;
-       state.isAdded = false;
-     })
-      .addCase(updateProductAction.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(updateProductAction.fulfilled, (state, action) => {
-        state.loading = false;
-        state.product = action.payload;
-        state.isUpdated = true;
-      })
-      .addCase(updateProductAction.rejected, (state, action) => {
-        state.loading = false;
-        state.product = null;
-        state.isUpdated = false;
-        state.error = action.payload;
-      })
-      .addCase(fetchProductsAction.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchProductsAction.fulfilled, (state, action) => {
-        state.loading = false;
-        state.products = action.payload;
-        state.isAdded = true;
-      })
-      .addCase(fetchProductsAction.rejected, (state, action) => {
-        state.loading = false;
-        state.products = [];
-        state.isAdded = false;
-        state.error = action.payload;
-      })
-      .addCase(fetchProductAction.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchProductAction.fulfilled, (state, action) => {
-        state.loading = false;
-        state.product = action.payload;
-        state.isAdded = true;
-      })
-      .addCase(fetchProductAction.rejected, (state, action) => {
-        state.loading = false;
-        state.product = null;
-        state.isAdded = false;
-        state.error = action.payload;
-      })
-      .addCase(deleteProductAction.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(deleteProductAction.fulfilled, (state, action) => {
-        state.loading = false;
-        // Assuming the deleted product is removed from the products array
-        state.products = state.products.filter(product => product.id !== action.payload.id);
-        state.isDelete = true;
-      })
-      .addCase(deleteProductAction.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-        state.isDelete = false;
-      })
-      .addCase(resetErrAction.pending, (state, action) => {
-        state.error = null;
-      })
-      .addCase(resetSuccessAction.pending, (state, action) => {
-        state.isAdded = false;
-        state.isUpdated = false;
-      });
+    });
+    builder.addCase(createProductAction.rejected, (state, action) => {
+      state.loading = false;
+      state.product = null;
+      state.isAdded = false;
+      state.error = action.payload;
+    });
+    //update
+    builder.addCase(updateProductAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateProductAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.product = action.payload;
+      state.isUpdated = true;
+    });
+    builder.addCase(updateProductAction.rejected, (state, action) => {
+      state.loading = false;
+      state.product = null;
+      state.isUpdated = false;
+      state.error = action.payload;
+    });
+    //fetch all
+    builder.addCase(fetchProductsAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchProductsAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.products = action.payload;
+      state.isAdded = true;
+    });
+    builder.addCase(fetchProductsAction.rejected, (state, action) => {
+      state.loading = false;
+      state.products = null;
+      state.isAdded = false;
+      state.error = action.payload;
+    });
+    //fetch all
+    builder.addCase(fetchProductAction.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchProductAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.product = action.payload;
+      state.isAdded = true;
+    });
+    builder.addCase(fetchProductAction.rejected, (state, action) => {
+      state.loading = false;
+      state.product = null;
+      state.isAdded = false;
+      state.error = action.payload;
+    });
+    //reset error
+    builder.addCase(resetErrAction.pending, (state, action) => {
+      state.error = null;
+    });
+    //reset success
+    builder.addCase(resetSuccessAction.pending, (state, action) => {
+      state.isAdded = false;
+    });
   },
 });
 
+//generate the reducer
 const productReducer = productSlice.reducer;
+
 export default productReducer;

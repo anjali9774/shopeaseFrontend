@@ -30,7 +30,7 @@ const AllCategories = () => {
       <div className="mt-4 flow-root">
         <div className="-my-2">
           <div className="relative box-content h-80 overflow-x-auto py-2 xl:overflow-visible">
-            <div className="min-w-screen-xl absolute flex space-x-8 px-14 sm:px-16 lg:px-8 xl:relative xl:grid m-2  xl:grid-cols-5 xl:gap-x-9 xl:space-x-0 xl:px-14">
+            <div className="min-w-screen-xl absolute flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid m-2  xl:grid-cols-5 xl:gap-x-8 xl:space-x-0 xl:px-0">
               {categories?.map((category) => (
                 <Link
                   key={category?.name}
@@ -48,7 +48,7 @@ const AllCategories = () => {
                     className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-gray-800 opacity-50"
                   />
                   <span className="relative mt-auto text-center text-xl font-bold text-white">
-                    {category.name}
+                    {category.name} ({category.products.length})
                   </span>
                 </Link>
               ))}

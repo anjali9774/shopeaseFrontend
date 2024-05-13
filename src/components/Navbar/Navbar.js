@@ -1,6 +1,11 @@
 import { Fragment, useEffect, useState } from "react";
-import { Dialog, Popover, Transition } from "@headlessui/react";
-import { Bars3Icon, ShoppingCartIcon, UserIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
+import {
+  Bars3Icon,
+  ShoppingCartIcon,
+  UserIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import baseURL from "../../utils/baseURL";
 import logo from "./logo3.png";
@@ -95,10 +100,18 @@ export default function Navbar() {
                 </div>
                 {/* mobile category menu links */}
                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
+                  {/* {navigation.pages.map((page) => (
+                    <div key={page.name} className="flow-root">
+                      <a
+                        href={page.href}
+                        className="-m-2 block p-2 font-medium text-gray-900">
+                        {page.name}
+                      </a>
+                    </div>
+                  ))} */}
                   {categoriesToDisplay?.length <= 0 ? (
                     <>
                       <Link
-                        key="1"
                         to="/products?category=clothing"
                         className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                       >
@@ -106,7 +119,6 @@ export default function Navbar() {
                       </Link>
 
                       <Link
-                        key="2"
                         to="/"
                         className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                       >
@@ -114,7 +126,6 @@ export default function Navbar() {
                       </Link>
 
                       <Link
-                        key="3"
                         to="/"
                         className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                       >
@@ -122,15 +133,19 @@ export default function Navbar() {
                       </Link>
                     </>
                   ) : (
-                    categoriesToDisplay?.map((category) => (
-                      <Link
-                        key={category?._id}
-                        to={`/products-filters?category=${category?.name}`}
-                        className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                      >
-                        {category?.name}
-                      </Link>
-                    ))
+                    categoriesToDisplay?.map((category) => {
+                      return (
+                        <>
+                          <Link
+                            key={category?._id}
+                            to={`/products-filters?category=${category?.name}`}
+                            className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                          >
+                            {category?.name}
+                          </Link>
+                        </>
+                      );
+                    })
                   )}
                 </div>
 
@@ -237,15 +252,13 @@ export default function Navbar() {
                         {categoriesToDisplay?.length <= 0 ? (
                           <>
                             <Link
-                            key="1"
-                              to="/products-filters?category=clothing"
+                              to="/products?category=clothing"
                               className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                             >
                               Clothing
                             </Link>
 
                             <Link
-                            key="2"
                               to="/"
                               className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                             >
@@ -253,7 +266,6 @@ export default function Navbar() {
                             </Link>
 
                             <Link
-                            key="3"
                               to="/"
                               className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                             >
@@ -263,13 +275,15 @@ export default function Navbar() {
                         ) : (
                           categoriesToDisplay?.map((category) => {
                             return (
-                              <Link
-                                key={category?._id}
-                                to={`/products-filters?category=${category?.name}`}
-                                className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                              >
-                                {category?.name}
-                              </Link>
+                              <>
+                                <Link
+                                  key={category?._id}
+                                  to={`/products-filters?category=${category?.name}`}
+                                  className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                                >
+                                  {category?.name}
+                                </Link>
+                              </>
                             );
                           })
                         )}
@@ -299,7 +313,7 @@ export default function Navbar() {
 
                   {/* login profile icon mobile */}
                   <div className="flex flex-1 items-center justify-end">
-                    {user?.user?.isAdmin && (
+                    {user?.userFound?.isAdmin && (
                       <Link
                         to="/admin"
                         className="inline-flex items-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

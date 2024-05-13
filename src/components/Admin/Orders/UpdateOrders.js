@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { updateOrderAction } from "../../../redux/slices/orders/orderSlices";
+import { updateOrderAction } from "../../../redux/slices/orders/ordersSlices";
 
 const UpdateOrders = () => {
   //get the id from params

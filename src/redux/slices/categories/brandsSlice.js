@@ -31,7 +31,7 @@ export const createBrandAction = createAsyncThunk(
       };
       //Images
       const { data } = await axios.post(
-        `${baseURL}/brands/add`,
+        `${baseURL}/brands`,
         {
           name,
         },

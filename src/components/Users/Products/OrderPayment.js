@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { getCartItemsFromLocalStorageAction } from "../../../redux/slices/cart/cartSlices";
-import { placeOrderAction } from "../../../redux/slices/orders/orderSlices";
+import { placeOrderAction } from "../../../redux/slices/orders/ordersSlices";
 import { getUserProfileAction } from "../../../redux/slices/users/usersSlice";
 import ErrorMsg from "../../ErrorMsg/ErrorMsg";
 import LoadingComponent from "../../LoadingComp/LoadingComponent";
@@ -38,8 +38,6 @@ export default function OrderPayment() {
         totalPrice: sumTotalPrice,
       })
     );
-    //empty cart items
-
   };
   const { loading: orderLoading, error: orderErr } = useSelector(
     (state) => state?.orders

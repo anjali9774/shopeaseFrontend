@@ -1,5 +1,4 @@
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
 import Swal from "sweetalert2";
 
 import { resetErrAction } from "../../redux/slices/globalActions/globalActions";
@@ -11,9 +10,7 @@ const ErrorMsg = ({ message }) => {
     title: "Oops...",
     text: message,
   });
-  useEffect(() => {
-    dispatch(resetErrAction());
-  }, [dispatch]);
+  dispatch(resetErrAction());
 };
 
 export default ErrorMsg;

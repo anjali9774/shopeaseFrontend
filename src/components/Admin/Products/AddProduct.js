@@ -92,7 +92,6 @@ export default function AddProduct() {
     district: "",
     phone: "",
   });
-  
 
   //onChange
   const handleOnChange = (e) => {

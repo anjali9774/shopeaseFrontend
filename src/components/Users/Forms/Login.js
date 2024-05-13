@@ -3,46 +3,38 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUserAction } from "../../../redux/slices/users/usersSlice";
 import ErrorMsg from "../../ErrorMsg/ErrorMsg";
 import LoadingComponent from "../../LoadingComp/LoadingComponent";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const Login = () => {
+  //dispatch
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Initialize useNavigate
-
   const [formData, setFormData] = useState({
-    email: "Your Email Here",
-    password: "Password Here",
+    email: "admin@gmail.com",
+    password: "12345",
   });
-
+  //---Destructuring---
   const { email, password } = formData;
-
+  //---onchange handler----
   const onChangeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  //---onsubmit handler----
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(loginUserAction({ email, password }))
-      .then(() => {
-        // After successful login, navigate back to the dashboard
-        navigate("/");
-      })
-      .catch((error) => {
-        // Handle error if needed
-        console.error("Login failed:", error);
-      });
+    dispatch(loginUserAction({ email, password }));
   };
 
+  //get data from store
   const { error, loading, userInfo } = useSelector(
     (state) => state?.users?.userAuth
   );
 
+  //redirect
   useEffect(() => {
     if (userInfo?.userFound) {
-      navigate("/"); // Redirect to the dashboard
+      window.location.href = "/";
     }
-  }, [userInfo, navigate]);
-
+  }, [userInfo]);
   return (
     <>
       <section className="py-20 bg-gray-100 overflow-x-hidden">
@@ -108,7 +100,7 @@ const Login = () => {
               className="w-full md:w-2/6 h-128 md:h-auto flex items-center lg:items-end px-4 pb-20 bg-cover bg-no-repeat"
               style={{
                 backgroundImage:
-                  'url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVd6Izbzdmneu7TBJ0MgJJgc2jhfsxcfnwSw&s")',
+                  'url("https://cdn.pixabay.com/photo/2017/03/29/04/47/high-heels-2184095_1280.jpg")',
               }}
             ></div>
           </div>

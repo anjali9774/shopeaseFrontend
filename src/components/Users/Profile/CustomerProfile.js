@@ -14,17 +14,6 @@ export default function CustomerProfile() {
   const { error, loading, profile } = useSelector((state) => state?.users);
   //get orders
   const orders = profile?.user?.orders;
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error?.status === 401) {
-    return <div>Unauthorized. Please log in again.</div>;
-  }
-
-  if (!profile) {
-    return <div>No user profile found.</div>;
-  }
 
   return (
     <>
